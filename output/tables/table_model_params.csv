@@ -1,0 +1,10 @@
+,Setting
+RF n_estimators (B),300
+RF max_depth,15
+RF min_samples_split,5
+RF CV scoring,"MSE, 5-fold unshuffled"
+LSTM architecture,"LSTM(50, seq) -> Dropout(0.2) -> LSTM(50) -> Dropout(0.2) -> Dense(1)"
+LSTM optimizer / loss,Adam / MSE
+LSTM epochs / batch,20 / 32
+Training target dates,2016-01-17 to 2022-12-31
+Test target dates,2023-01-01 to 2023-12-31

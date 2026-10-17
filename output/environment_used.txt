@@ -1,0 +1,11 @@
+python 3.13.16
+platform Linux-6.18.44-fc-v114-x86_64-with-glibc2.39
+numpy 2.5.3
+pandas 3.0.5
+scipy 1.18.1
+scikit-learn 1.9.1
+tensorflow 2.21.0
+matplotlib 3.11.2
+geopandas 1.2.0
+openpyxl 3.1.5
+run time 137 s

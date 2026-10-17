@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
+# Third-party district outlines: not redistributed (see README Section 6)
+data/geo/sigungu_boundaries.geojson

@@ -1,0 +1,7 @@
+Case,Revenue (M USD),Revenue vs actual (%),Cost (M USD),Profit (M USD)
+"Actual price, Simulation 1",327.0789,-0.0000,281.8573,45.2216
+"Actual price, Simulation 2",313.5252,0.0000,267.5348,45.9905
+"Random Forest Regressor, Simulation 1",328.9160,0.5617,281.8573,47.0587
+"Random Forest Regressor, Simulation 2",315.3246,0.5739,267.5348,47.7898
+"LSTM, Simulation 1",341.0970,4.2858,281.8573,59.2397
+"LSTM, Simulation 2",327.0045,4.2992,267.5348,59.4697

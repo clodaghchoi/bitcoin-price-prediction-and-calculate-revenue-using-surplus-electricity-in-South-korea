@@ -1,0 +1,44 @@
+% Table: Descriptive statistics for surplus electricity data (2021-2023)
+Electricity Power (kWh) & 29,287 & 1,054,693 & 37,913 \\
+Total Households & 134.4 & 2,522 & 164.4 \\
+
+% Table: Descriptive statistics for bitcoin data
+Market Price (USD) & 16,943 & 67,562 & 16,309 \\
+Hash Rate (TH/s) & 122,603,420 & 612,085,088 & 124,275,180 \\
+
+% Table: Bitcoin price prediction results
+Random Forest Regressor & 1,326 & 2,900,013 & 0.92 \\
+LSTM & 1,735 & 4,667,935 & 0.86 \\
+
+% Table: Monthly costs (USD) for baseline
+% header: M=191,660 (Simulation 1) | M=181,910 (Simulation 2)
+Depreciation & 21,646,932 & 21,646,932 & 21,646,932 & 20,545,724 & 20,545,724 & 20,545,724 \\
+Labor & 16,000 & 24,000 & 32,000 & 16,000 & 24,000 & 32,000 \\
+Cooling O&M & 811,760 & 1,623,520 & 3,247,040 & 770,465 & 1,540,929 & 3,081,859 \\
+Networking/site & 96,830 & 193,660 & 388,320 & 91,955 & 183,910 & 368,820 \\
+\textbf{Monthly cost} & 22,571,522 & 23,488,112 & 25,314,292 & 21,424,144 & 22,294,563 & 24,028,402 \\
+Per rig-month & 117.77 & 122.55 & 132.08 & 117.77 & 122.56 & 132.09 \\
+
+% Table: Final profit comparison (Mid cost tier, unit: million USD)
+Actual price, Simulation 1 & 327 & 281.86 & 45.22 \\
+Actual price, Simulation 2 & 314 & 267.53 & 45.99 \\
+Random Forest Regressor, Simulation 1 & 329 (+0.6\%) & 281.86 & 47.06 \\
+Random Forest Regressor, Simulation 2 & 315 (+0.6\%) & 267.53 & 47.79 \\
+LSTM, Simulation 1 & 341 (+4.3\%) & 281.86 & 59.24 \\
+LSTM, Simulation 2 & 327 (+4.3\%) & 267.53 & 59.47 \\
+
+% Table: Simulation settings
+Simulation 1 (average-based) & 191,660 & 42\% \\
+Simulation 2 (profit-maximising) & 181,910 & 54\% \\
+
+% Table: Sensitivity to miner lifetime (actual price, Mid tier, million USD)
+60 & -84.66 & -77.28 \\
+72 & -19.72 & -15.65 \\
+84 & 26.67 & 28.38 \\
+90 & 45.22 & 45.99 \\
+120 & 110.16 & 107.63 \\
+
+% Table: Sensitivity to operating hours (actual price, Mid tier, million USD)
+End-of-year capacity & 3.25 & 205,133 & 25.43 & 193,711 & 27.37 & 173,911 & 30.60 \\
+Average capacity (base case) & 3.48 & 191,660 & 45.22 & 181,910 & 45.99 & 162,489 & 47.38 \\
+Start-of-year capacity & 3.74 & 178,188 & 65.01 & 169,139 & 64.77 & 180,133 & 65.06 \\

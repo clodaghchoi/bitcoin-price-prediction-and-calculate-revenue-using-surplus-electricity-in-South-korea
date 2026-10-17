@@ -1,0 +1,19 @@
+Case,Tier,Revenue (M USD),Revenue vs actual (%),Cost (M USD),Profit (M USD)
+"Actual price, Simulation 1",Low,327.0789,-0.0000,270.8583,56.2207
+"Actual price, Simulation 1",Mid,327.0789,-0.0000,281.8573,45.2216
+"Actual price, Simulation 1",High,327.0789,-0.0000,303.7715,23.3074
+"Actual price, Simulation 2",Low,313.5252,0.0000,257.0897,56.4355
+"Actual price, Simulation 2",Mid,313.5252,0.0000,267.5348,45.9905
+"Actual price, Simulation 2",High,313.5252,0.0000,288.3408,25.1844
+"Random Forest Regressor, Simulation 1",Low,328.9160,0.5617,270.8583,58.0578
+"Random Forest Regressor, Simulation 1",Mid,328.9160,0.5617,281.8573,47.0587
+"Random Forest Regressor, Simulation 1",High,328.9160,0.5617,303.7715,25.1445
+"Random Forest Regressor, Simulation 2",Low,315.3246,0.5739,257.0897,58.2349
+"Random Forest Regressor, Simulation 2",Mid,315.3246,0.5739,267.5348,47.7898
+"Random Forest Regressor, Simulation 2",High,315.3246,0.5739,288.3408,26.9838
+"LSTM, Simulation 1",Low,341.0970,4.2858,270.8583,70.2387
+"LSTM, Simulation 1",Mid,341.0970,4.2858,281.8573,59.2397
+"LSTM, Simulation 1",High,341.0970,4.2858,303.7715,37.3255
+"LSTM, Simulation 2",Low,327.0045,4.2992,257.0897,69.9147
+"LSTM, Simulation 2",Mid,327.0045,4.2992,267.5348,59.4697
+"LSTM, Simulation 2",High,327.0045,4.2992,288.3408,38.6636
