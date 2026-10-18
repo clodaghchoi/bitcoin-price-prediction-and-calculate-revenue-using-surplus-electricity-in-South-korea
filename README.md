@@ -15,7 +15,7 @@ python -m pip install -r requirements.txt
 python code/run_all.py
 ```
 
-The run takes about 2 minutes on a normal laptop CPU (no GPU needed).
+The run takes about 2 to 4 minutes on a normal laptop CPU (no GPU needed).
 All results are written to `output/`. The folder is deleted and rebuilt on
 every run, so old results never mix with new ones.
 
@@ -25,7 +25,6 @@ every run, so old results never mix with new ones.
 data/
   bitcoin_daily_blockchain_com.csv          Bitcoin network data (daily)
   kepco_surplus_electricity_2021_2023.csv   Surplus electricity (monthly, by legal dong)
-  geo/sigungu_codes.csv                     district code -> province and district names (Figure 3)
 code/
   config.py                    every assumption and parameter, with its source
   common.py                    data loading and helper functions
@@ -61,11 +60,9 @@ output/
 | Figure 4: monthly total surplus electricity | `figures/fig04_monthly_surplus.png` | s01 |
 | Figure 5: predicted vs actual prices | `figures/fig05_price_predictions.png` | s02 |
 | Figure 7: number of miners available per month | `figures/fig07_monthly_miners.png` | s03 |
-| Figure 8: Bitcoins mined per day (2023) | `figures/fig08_daily_btc_mined.png` | s03 |
+| Figure 8: Bitcoins mined per day (2021-2023) | `figures/fig08_daily_btc_mined.png` | s03 |
 | Figure 9: daily revenue, Simulations 1 and 2 | `figures/fig09-1_daily_revenue_sim1.png`, `figures/fig09-2_daily_revenue_sim2.png` | s04 |
 | Figure 10: daily revenue, Random Forest | `figures/fig10_daily_revenue_rf.png` | s04 |
-| Figure 12: profit over 2023 by fleet size | `figures/fig12_profit_curve.png`, `tables/profit_curve_2023.csv` | s04 |
-| Table: sensitivity to operating hours | `tables/table_sensitivity_hours.csv` | s04 |
 | Numbers in the text (fleet sizes, annual costs, lowest profit, etc.) | `numbers_in_text.json` | s01-s04 |
 
 Figure 1 (LSTM cell diagram) and Figure 6 (photo of the miner) contain no data
@@ -112,75 +109,66 @@ and are not produced by the code.
 
 All values below are set in `code/config.py`.
 
-**Price prediction (s02).** Six technical indicators computed from daily prices
-predict the next day's price. Training targets: 2016-01-17 to 2022-12-31.
-Test targets: all 365 days of 2023. The Random Forest is tuned by grid search
-(5-fold unshuffled cross-validation, MSE). The LSTM uses the previous 14 days
-of indicators; for early-2023 targets these inputs come from late 2022, so
-every 2023 day has a prediction from all three price paths (actual, Random
-Forest, LSTM).
-
-**Operating hours (config.py).** Miners run at full power for the equivalent
-full-load hours of photovoltaic (PV) systems in Korea: 2023 PV generation
-(33,236,447 MWh) divided by the average installed capacity in 2023 (26,192 MW,
-the mean of the capacity at the start and end of the year) and by 365 days,
-which gives 3.48 hours per day. Source: Korea Energy Agency, *2023 New and
-Renewable Energy Supply Statistics* (2024), table 2, sheet "4.2 태양광". The
-three numbers are written in `config.py`.
+**Price prediction (s02).** Six technical indicators computed from each day's
+data predict the next day's price. Training rows: 2016-01-16 to 2022-12-31.
+Test rows: 2023-01-01 to 2023-12-30, so the predicted days are 2023-01-02 to
+2023-12-31. The Random Forest is tuned by grid search (5-fold unshuffled
+cross-validation, MSE). The LSTM uses the previous 14 days of indicators,
+taken only from the test period, so it has no prediction for the first 14
+test days (as stated in the paper). Each predicted price is matched with the
+day it predicts.
 
 **Mining simulation (s03).**
 1. Usable energy in a month = national surplus kWh × (1 − 3.59% transmission loss).
-2. Miners available in month *m*: N_m = floor(usable kWh / (5.676 kW × 3.48 h × days in *m*)).
-3. The fleet size is chosen at the start of 2023 with 2021–2022 data only:
-   - Simulation 1 (average-based): the mean of N_m over 2021–2022.
-   - Simulation 2 (profit-maximising): the fleet size that maximises 2021–2022
-     profit when one running miner earns its 2022 average monthly revenue.
-     An extra miner earns revenue only in months in which it runs but costs
-     money every month, so it is worth buying only if it runs in at least a
-     share c/r of the months (c = monthly cost per miner, r = monthly revenue
-     per running miner). This is the critical-ratio rule of the newsvendor problem.
-4. In each month of 2023, min(N_m, fleet) miners run.
-5. Bitcoins mined per day = 6.25 BTC × 144 blocks × (3.48 / 24) × running hash rate / network hash rate.
+2. Miners run only during sunshine hours, 6.3 hours per day (Section 3 of the paper).
+3. Miners available in month *m*: N_m = floor(usable kWh / (5.676 kW × 6.3 h × days in *m*)).
+4. Simulation 1: N_m miners run in month *m*; the fleet is the largest N_m
+   over 2021-2023 (166,887, June 2022).
+   Simulation 2: the fleet is the average of N_m over 2021-2023 (111,269);
+   min(N_m, 111,269) miners run in month *m*.
+5. Bitcoins mined per day = 6.25 BTC × 144 blocks × (6.3 / 24) × running hash rate / network hash rate.
+   The factor 6.3 / 24 is the share of the day during which the miners run.
 
-**Revenue, cost, profit (s04).** Daily revenue = price × Bitcoins mined.
-Monthly cost = straight-line depreciation of miners (USD 10,165 over 90 months)
-+ labor + cooling O&M + networking/site, under Low / Mid / High tiers.
-Profit = 2023 revenue − 12 months of cost. The paper reports the Mid tier;
-all tiers are in `table_profit_all_tiers.csv`. s04 also computes the profit
-for every fleet size (`profit_curve_2023.csv`, Figure 12), the best fleet size
-in hindsight (an upper bound), the effect of adding the fleet's hash power to
-the network, revenue after the April 2024 halving, and the sensitivity of all
-results to the operating hours (`table_sensitivity_hours.csv`).
+**Revenue, cost, profit (s04).** Daily revenue = price × Bitcoins mined, for
+the actual price, the Random Forest prediction and the LSTM prediction. Revenue
+is summed over the 350 days of 2023 that have all three prices (2023-01-16 to
+2023-12-31). Monthly cost = straight-line depreciation of the fleet (USD 10,165
+per miner over 90 months) + labor + cooling O&M + networking/site, under
+Low / Mid / High tiers. Profit = revenue − 12 months of cost. The paper reports
+the Mid tier; all tiers are in `table_profit_all_tiers.csv`.
 
 ## 6. Figure 3 (district outlines, downloaded separately)
 
 Figure 3 needs the outlines of the 250 districts (city, county or district;
-시군구) of South Korea. These outlines are third-party data:
+시군구) of South Korea. They come from Statistics Korea:
 
-> GIS Developer (GEOSERVICE), "대한민국 최신 행정구역(SHP) 다운로드" (latest South
-> Korean administrative districts, SHP), https://www.gisdeveloper.co.kr/?p=2332.
-> Version used: 시군구 (district) file of 29 July 2023. The site states that the
-> outlines are based on the administrative district maps of the Korean road-name
-> address database, with errors corrected by the site author.
+> Statistics Korea (Ministry of Data and Statistics), Statistical Geographic
+> Information Service (SGIS), "센서스용 행정구역 경계" (census administrative
+> boundaries), 2023, 시군구 (district) level, SHP format, coordinate system UTM-K
+> (EPSG:5179). https://sgis.mods.go.kr/view/pss/openDataIntrcn (자료제공 → 통계지역경계).
+> File used: `bnd_all_00_2023_2Q.zip`, which contains `bnd_sigungu_00_2023_2Q`
+> (base date 1 July 2023).
 
-The site author asks users to share the download address instead of the
-files, so **this package does not include the outlines**. To make Figure 3:
+The SGIS terms of use allow free reuse only for material marked with the
+Korea Open Government License (KOGL, 공공누리) Type 1, and the boundary files
+carry no such mark, so **this package does not include the outlines**. They
+are free to download. To make Figure 3:
 
-1. Download the 시군구 (district) SHP file of 29 July 2023 from the address above
-   and unzip it.
+1. Download the 2023 census administrative boundaries (`bnd_all_00_2023_2Q.zip`)
+   from the address above.
 2. From the package root, run
    ```bash
-   python code/prepare_boundaries.py PATH/TO/SIG.shp --encoding cp949
+   python code/prepare_boundaries.py PATH/TO/bnd_all_00_2023_2Q.zip
    ```
-   This writes `data/geo/sigungu_boundaries.geojson`: one outline per district,
-   simplified to about 100 m (enough for a national map), with the province
-   and district names added from `data/geo/sigungu_codes.csv`.
+   The zip file does not need to be unzipped. The script writes
+   `data/geo/sigungu_boundaries.geojson`: one outline per district,
+   simplified to about 100 m (enough for a national map). The province name is
+   taken from the first two digits of the SGIS district code.
 3. Run `python code/run_all.py` again (or only `python code/s05_regional_map.py`).
 
-`data/geo/sigungu_codes.csv` (included) links each official 5-digit district
-code (`SIG_CD`) to the province and district names used in the KEPCO data.
-The script prints a warning if a district has no outline in the downloaded
-file, which would mean a different version of the outlines was downloaded.
+All 250 districts in the 2023 SGIS file match the districts in the KEPCO data.
+Step 5 prints a warning if a district has data but no outline, or an outline
+but no data, which would mean a different version of the outlines was downloaded.
 
 Without the outlines, step 5 prints a message and is skipped. No other table
 or figure depends on them.

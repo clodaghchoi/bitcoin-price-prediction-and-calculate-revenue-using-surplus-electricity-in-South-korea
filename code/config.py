@@ -40,9 +40,11 @@ RANDOM_SEED = 42
 # Bitcoin price prediction (Section 4.1)
 # ---------------------------------------------------------------------------
 PRICE_START = "2016-01-01"     # price changes before 2016 are negligible (Section 3.1)
-TRAIN_END = "2022-12-31"       # last TARGET date in the training set
-TEST_START = "2023-01-01"      # first TARGET date in the test set
-TEST_END = "2023-12-31"        # last TARGET date in the test set
+DATA_END = "2023-12-31"        # last day of Bitcoin data used
+# Rows are indexed by the date t on which the indicators are known; the
+# target is the price on day t+1. Periods as in the original analysis:
+TRAIN_START, TRAIN_END = "2016-01-16", "2022-12-31"   # first row with all indicators .. end of 2022
+TEST_START, TEST_END = "2023-01-01", "2023-12-30"     # 2023 (the target of 2023-12-30 is 2023-12-31)
 INDICATOR_WINDOW = 14          # SMA, WMA, K%, RSI window (Table 3)
 D_WINDOW = 3                   # D% = 3-day SMA of K% (Table 3)
 MOMENTUM_LAG = 1               # N = 1 (Table 3)
@@ -65,38 +67,11 @@ LSTM_BATCH_SIZE = 32           # Table 4
 # Mining simulation (Sections 3 and 4.2)
 # ---------------------------------------------------------------------------
 TRANSMISSION_LOSS_RATE = 0.0359   # KEPCO 10-year average 2012-2021 (Kim, 2022)
-
-# Operating hours per day = equivalent full-load hours of photovoltaic (PV)
-# systems in Korea in 2023: annual PV generation / (average installed capacity x 365).
-# Source: Korea Energy Agency, 2023 New and Renewable Energy Supply Statistics
-# (published 2024), table 2, sheet "4.2 태양광", column 전국 (whole country).
-PV_GENERATION_2023_MWH = 33_236_446.9        # row "2023년 발전량(MWh)"
-PV_CAPACITY_END_2023_KW = 28_033_335.7       # row "2023년 누적 보급용량(kW)"
-PV_NEW_CAPACITY_2023_KW = 3_682_247.4        # row "최근 3년간 신규 보급용량(kW)", '23
-PV_CAPACITY_AVG_2023_KW = PV_CAPACITY_END_2023_KW - PV_NEW_CAPACITY_2023_KW / 2   # mean of start and end of 2023
-OPERATING_HOURS_PER_DAY = PV_GENERATION_2023_MWH * 1000 / (PV_CAPACITY_AVG_2023_KW * 365)   # = 3.48 h
-# Sensitivity: capacity at the end of 2023 (3.25 h) and at the start of 2023 (3.74 h)
-SENSITIVITY_HOURS = {
-    "End-of-year capacity": PV_GENERATION_2023_MWH * 1000 / (PV_CAPACITY_END_2023_KW * 365),
-    "Average capacity (base case)": PV_GENERATION_2023_MWH * 1000 / (PV_CAPACITY_AVG_2023_KW * 365),
-    "Start-of-year capacity": PV_GENERATION_2023_MWH * 1000 / ((PV_CAPACITY_END_2023_KW - PV_NEW_CAPACITY_2023_KW) * 365),
-}
-
+SOLAR_HOURS_PER_DAY = 6.3         # annual average daily sunshine hours in Korea (Nematollahi and Kim, 2017)
 MINER_POWER_KW = 5.676            # Antminer S21 XP Hyd., 5,676 W (BITMAIN, 2024)
 MINER_HASH_RATE_THS = 473         # Antminer S21 XP Hyd., 473 TH/s (BITMAIN, 2024)
-BLOCK_REWARD_BTC = 6.25           # valid 2020-05-12 to 2024-04-20 (Table 6)
-BLOCK_REWARD_AFTER_2024_HALVING_BTC = 3.125
+BLOCK_REWARD_BTC = 6.25           # valid 2020-05-12 to 2024-04-20 (Table 7)
 BLOCKS_PER_DAY = 144              # one block per ~10 minutes
-
-# Fleet sizing is decided at the start of 2023 with information available then:
-SIZING_START = "2021-01-01"       # surplus electricity pattern used for sizing
-SIZING_END = "2022-12-31"
-SIZING_ECONOMICS_YEAR = "2022"    # most recent full year of Bitcoin price and hash rate
-SIZING_COST_TIER = "Mid"
-
-# The fleets are then evaluated over 2023:
-SIMULATION_START = "2023-01-01"
-SIMULATION_END = "2023-12-31"
 
 # ---------------------------------------------------------------------------
 # Costs (Section 4.3)

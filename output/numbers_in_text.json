@@ -8,81 +8,21 @@
     "min_samples_split": 5,
     "n_estimators": 300
   },
-  "train_rows": 2541,
-  "test_rows": 365,
-  "train_first_target_date": "2016-01-17",
-  "operating_hours_per_day": 3.4765585522191476,
-  "capacity_factor": 0.14485660634246447,
-  "pv_capacity_avg_2023_mw": 26192.212,
-  "pv_generation_2023_gwh": 33236.446899999995,
-  "sensitivity_hours": {
-    "End-of-year capacity": 3.24823130592115,
-    "Average capacity (base case)": 3.4765585522191476,
-    "Start-of-year capacity": 3.739412280400502
-  },
-  "miners_available_mean_2021_2023": 201635.38888888888,
-  "miners_available_mean_2021_2022": 191660.41666666666,
-  "miners_available_min": 109410,
-  "miners_available_min_month": "2021-01",
-  "miners_available_max": 302422,
-  "miners_available_max_month": "2022-06",
-  "fleet_sim1": 191660,
-  "fleet_sim2": 181910,
-  "sizing_revenue_per_miner_month_2022": 241.65486615540078,
-  "sizing_unit_cost_per_miner_month": 122.55820559922795,
-  "sizing_critical_ratio": 0.5071621670569404,
-  "share_months_running_sim1": 0.4166666666666667,
-  "share_months_running_sim2": 0.5416666666666666,
-  "revenue_per_running_miner_month_by_year": {
-    "2021": 604.6123886074794,
-    "2022": 241.65486615540075,
-    "2023": 148.15962505685215
-  },
-  "months_2023_sim1_fully_used": 10,
-  "months_2023_sim2_fully_used": 10,
-  "btc_mined_2023_sim1": 11543.156797828471,
-  "btc_mined_2023_sim2": 11059.699295085413,
-  "annual_cost_mid_sim1_musd": 281.8573456666667,
-  "annual_cost_mid_sim2_musd": 267.5347581666667,
-  "depreciation_per_miner_month_usd": 112.94444444444444,
-  "depreciation_share_of_cost_mid": {
-    "sim1": 0.921612264715892,
-    "sim2": 0.9215575888388817
-  },
+  "train_rows": 2542,
+  "test_rows": 364,
+  "lstm_prediction_days": 350,
+  "fleet_sim1_max": 166887,
+  "fleet_sim2_average": 111269,
+  "miners_available_mean_exact": 111269.25,
+  "peak_month": "2022-06",
+  "solar_hours_per_day": 6.3,
+  "transmission_loss_rate": 0.0359,
+  "revenue_days": 350,
+  "revenue_first_day": "2023-01-16",
+  "revenue_last_day": "2023-12-31",
+  "annual_cost_mid_sim1_musd": 245.46622154999997,
+  "annual_cost_mid_sim2_musd": 163.76430651666666,
   "lowest_profit_case": "Actual price, Simulation 1",
-  "lowest_profit_musd": 45.22159014185161,
-  "profit_range_all_cases_musd": [
-    23.307431141851605,
-    70.23873736769914
-  ],
-  "profit_range_mid_musd": [
-    45.22159014185161,
-    59.46969907436377
-  ],
-  "sim2_minus_sim1_mid_musd": {
-    "actual": 0.7689006170951131,
-    "random_forest": 0.7311470834014457,
-    "lstm": 0.23004120666462313
-  },
-  "best_in_hindsight_fleet": 162489,
-  "best_in_hindsight_profit_musd": 47.37952834511736,
-  "revenue_components": {
-    "sim1": {
-      "fees_share_of_revenue": 0.06788736106010684,
-      "network_adjustment_change": -0.033223488130693535,
-      "fleet_share_of_network_max": 0.05763672067344165
-    },
-    "sim2": {
-      "fees_share_of_revenue": 0.06851247785922765,
-      "network_adjustment_change": -0.031742796716475286,
-      "fleet_share_of_network_max": 0.05470466376763942
-    }
-  },
-  "revenue_per_running_miner_month_2023_usd": 148.15962505685215,
-  "revenue_per_running_miner_month_2023_after_halving_usd": 79.21319280250606,
-  "break_even_lifetime_months": {
-    "sim1": 76.6552581563049,
-    "sim2": 75.85097488572208
-  },
-  "revenue_days": 365
+  "lowest_profit_musd": 126.02231222603945,
+  "lowest_profit_per_month_musd": 10.501859352169953
 }

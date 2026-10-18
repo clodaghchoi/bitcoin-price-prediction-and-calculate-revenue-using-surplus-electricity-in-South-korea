@@ -50,7 +50,7 @@ def main() -> None:
     gdf = gdf[gdf["_merge"] == "both"].drop(columns="_merge")
     M.save_table(gdf.drop(columns="geometry"), "map_district_averages", index=False)
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 12))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8))
     for ax, col, cmap, label in [(ax1, "households", plt.cm.Oranges, "Number of household"),
                                  (ax2, "surplus_kwh", plt.cm.Reds, "Surplus electricity (kWh)")]:
         norm = mcolors.Normalize(vmin=gdf[col].min(), vmax=gdf[col].max())

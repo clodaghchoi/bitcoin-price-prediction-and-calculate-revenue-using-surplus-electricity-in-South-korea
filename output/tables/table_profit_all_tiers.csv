@@ -1,19 +1,19 @@
 Case,Tier,Revenue (M USD),Revenue vs actual (%),Cost (M USD),Profit (M USD)
-"Actual price, Simulation 1",Low,327.0789,-0.0000,270.8583,56.2207
-"Actual price, Simulation 1",Mid,327.0789,-0.0000,281.8573,45.2216
-"Actual price, Simulation 1",High,327.0789,-0.0000,303.7715,23.3074
-"Actual price, Simulation 2",Low,313.5252,0.0000,257.0897,56.4355
-"Actual price, Simulation 2",Mid,313.5252,0.0000,267.5348,45.9905
-"Actual price, Simulation 2",High,313.5252,0.0000,288.3408,25.1844
-"Random Forest Regressor, Simulation 1",Low,328.9160,0.5617,270.8583,58.0578
-"Random Forest Regressor, Simulation 1",Mid,328.9160,0.5617,281.8573,47.0587
-"Random Forest Regressor, Simulation 1",High,328.9160,0.5617,303.7715,25.1445
-"Random Forest Regressor, Simulation 2",Low,315.3246,0.5739,257.0897,58.2349
-"Random Forest Regressor, Simulation 2",Mid,315.3246,0.5739,267.5348,47.7898
-"Random Forest Regressor, Simulation 2",High,315.3246,0.5739,288.3408,26.9838
-"LSTM, Simulation 1",Low,341.0970,4.2858,270.8583,70.2387
-"LSTM, Simulation 1",Mid,341.0970,4.2858,281.8573,59.2397
-"LSTM, Simulation 1",High,341.0970,4.2858,303.7715,37.3255
-"LSTM, Simulation 2",Low,327.0045,4.2992,257.0897,69.9147
-"LSTM, Simulation 2",Mid,327.0045,4.2992,267.5348,59.4697
-"LSTM, Simulation 2",High,327.0045,4.2992,288.3408,38.6636
+"Actual price, Simulation 1",Low,371.4885,0.0000,235.8749,135.6137
+"Actual price, Simulation 1",Mid,371.4885,0.0000,245.4662,126.0223
+"Actual price, Simulation 1",High,371.4885,0.0000,264.5649,106.9236
+"Actual price, Simulation 2",Low,319.1652,0.0000,157.3334,161.8317
+"Actual price, Simulation 2",Mid,319.1652,0.0000,163.7643,155.4009
+"Actual price, Simulation 2",High,319.1652,0.0000,176.5420,142.6232
+"Random Forest Regressor, Simulation 1",Low,374.6421,0.8489,235.8749,138.7672
+"Random Forest Regressor, Simulation 1",Mid,374.6421,0.8489,245.4662,129.1759
+"Random Forest Regressor, Simulation 1",High,374.6421,0.8489,264.5649,110.0772
+"Random Forest Regressor, Simulation 2",Low,321.1686,0.6277,157.3334,163.8351
+"Random Forest Regressor, Simulation 2",Mid,321.1686,0.6277,163.7643,157.4043
+"Random Forest Regressor, Simulation 2",High,321.1686,0.6277,176.5420,144.6266
+"LSTM, Simulation 1",Low,379.8702,2.2562,235.8749,143.9953
+"LSTM, Simulation 1",Mid,379.8702,2.2562,245.4662,134.4040
+"LSTM, Simulation 1",High,379.8702,2.2562,264.5649,115.3053
+"LSTM, Simulation 2",Low,326.2263,2.2124,157.3334,168.8929
+"LSTM, Simulation 2",Mid,326.2263,2.2124,163.7643,162.4620
+"LSTM, Simulation 2",High,326.2263,2.2124,176.5420,149.6843

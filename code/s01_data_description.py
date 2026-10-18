@@ -36,7 +36,7 @@ def main() -> None:
 
     # --- Table: Bitcoin data, over the price-modelling sample ---
     # The sample starts once all technical indicators are defined.
-    sample = add_indicators(bitcoin.loc[C.PRICE_START:C.TEST_END, ["market_price_usd"]]).dropna()
+    sample = add_indicators(bitcoin.loc[C.PRICE_START:C.DATA_END, ["market_price_usd"]]).dropna()
     window = bitcoin.loc[sample.index.min():sample.index.max()]
     t2 = pd.DataFrame(
         {
@@ -52,30 +52,32 @@ def main() -> None:
         bitcoin_stats_end=str(window.index.max().date()),
     )
 
-    # --- Figure 2: Bitcoin price over the whole period ---
-    price = bitcoin.loc[:C.TEST_END, "market_price_usd"]
+    # --- Figure 2 (original style): Bitcoin price over the whole period ---
+    price = bitcoin.loc[:C.DATA_END, "market_price_usd"]
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(price.index, price.values, linewidth=0.8, label="Market price (USD)")
-    ax.axvspan(pd.Timestamp(C.PRICE_START), pd.Timestamp(C.TEST_END), color="gray", alpha=0.2,
-               label=f"Analysis period ({C.PRICE_START[:4]}-{C.TEST_END[:4]})")
+    ax.plot(price.index, price.values, label="market_price_usd ($)", linewidth=0.8)
+    ax.axvspan(pd.Timestamp(C.PRICE_START), pd.Timestamp(C.DATA_END), color="gray", alpha=0.2,
+               label="2016-01-01 onwards")
+    ax.annotate("2016 Onwards Highlight", xy=(pd.Timestamp(C.PRICE_START), price.loc[C.PRICE_START]),
+                xytext=(pd.Timestamp("2017-01-01"), price.max() * 0.9),
+                bbox=dict(boxstyle="round,pad=0.3", edgecolor="blue", facecolor="lightblue", alpha=0.5),
+                arrowprops=dict(arrowstyle="->", color="blue"))
     ax.set_xlabel("Date")
     ax.set_ylabel("Market Price ($)")
-    ax.legend(loc="upper left")
     ax.grid(True)
     M.savefig(fig, "fig02_bitcoin_price_all")
 
-    # --- Figure 4: monthly national surplus electricity ---
+    # --- Figure 4 (original style): monthly national surplus electricity, spline-smoothed ---
     monthly = M.monthly_national_surplus(surplus)
     x = np.arange(len(monthly))
     x_smooth = np.linspace(x.min(), x.max(), 300)
     y_smooth = make_interp_spline(x, monthly.values, k=3)(x_smooth)
     dates_smooth = pd.to_datetime(np.linspace(monthly.index.min().value, monthly.index.max().value, 300))
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(dates_smooth, y_smooth, linewidth=2, label="Total surplus electricity (smoothed)")
-    ax.plot(monthly.index, monthly.values, "o", markersize=4, color="C0", label="Monthly total")
-    ticks = pd.date_range(monthly.index.min(), monthly.index.max(), freq="3MS")
+    ax.plot(dates_smooth, y_smooth, label="Total Surplus Electricity", linewidth=2)
+    ticks = pd.date_range(monthly.index.min(), monthly.index.max(), freq="3ME")
     ax.set_xticks(ticks)
-    ax.set_xticklabels(ticks.strftime("%Y-%m"), rotation=45)
+    ax.set_xticklabels(ticks.strftime("%Y-%m"))
     M.sci_axis(ax, 8)
     ax.set_xlabel("Date")
     ax.set_ylabel("Surplus Electricity (kWh)")

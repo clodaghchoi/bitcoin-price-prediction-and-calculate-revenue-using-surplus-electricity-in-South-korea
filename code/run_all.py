@@ -17,7 +17,7 @@ import s04_revenue_cost_profit
 import s05_regional_map
 import s06_latex_tables
 
-PACKAGES = ["numpy", "pandas", "scipy", "scikit-learn", "tensorflow", "matplotlib", "geopandas", "openpyxl"]
+PACKAGES = ["numpy", "pandas", "scipy", "scikit-learn", "tensorflow", "matplotlib", "geopandas"]
 
 
 def main() -> None:
